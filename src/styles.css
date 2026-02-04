@@ -1,0 +1,836 @@
+/* CSS Variables */
+:root {
+  --bg-cream: #f5f0e8;
+  --bg-paper: #faf8f4;
+  --ink-black: #1a1814;
+  --ink-gray: #4a4640;
+  --vermillion: #d73027;
+  --vermillion-dark: #b82520;
+  --gold: #c4a35a;
+  --stone: #8b8580;
+  --border: #d4cfc5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-cream);
+  color: var(--ink-black);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Texture Overlay */
+.texture-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 1000;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* App Container */
+.app {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.app.loaded {
+  opacity: 1;
+}
+
+/* Decorative Elements */
+.deco-stamp {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 2rem;
+  color: var(--vermillion);
+  border: 3px solid var(--vermillion);
+  border-radius: 4px;
+  transform: rotate(-5deg);
+  opacity: 0.15;
+  z-index: 1;
+}
+
+.deco-stamp.top-right {
+  top: 120px;
+  right: 40px;
+}
+
+.deco-line {
+  position: fixed;
+  background: var(--vermillion);
+  opacity: 0.08;
+  z-index: 0;
+}
+
+.deco-line.horizontal {
+  height: 1px;
+  width: 200px;
+  top: 50%;
+  left: 0;
+}
+
+.deco-line.vertical {
+  width: 1px;
+  height: 300px;
+  bottom: 0;
+  right: 100px;
+}
+
+/* Header */
+.header {
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-paper);
+  position: relative;
+  z-index: 10;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.logo {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 500;
+  font-size: 2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.logo-jp {
+  color: var(--ink-black);
+}
+
+.logo-divider {
+  color: var(--vermillion);
+  font-weight: 300;
+}
+
+.logo-kr {
+  font-family: 'Noto Serif KR', serif;
+  color: var(--ink-gray);
+  font-size: 1.4rem;
+}
+
+.tagline {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.8rem;
+  color: var(--stone);
+  letter-spacing: 0.1em;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--vermillion);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-btn:hover::after,
+.nav-btn.active::after {
+  width: 100%;
+}
+
+.nav-btn.active {
+  background: var(--bg-cream);
+}
+
+.nav-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1rem;
+  color: var(--ink-black);
+}
+
+.nav-kr {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.7rem;
+  color: var(--stone);
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 3rem 4rem;
+  position: relative;
+  z-index: 5;
+}
+
+/* Home Section */
+.home-section {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 6rem;
+  min-height: 400px;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-title {
+  font-family: 'Shippori Mincho', serif;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-char {
+  font-size: 6rem;
+  line-height: 1;
+  color: var(--ink-black);
+}
+
+.hero-sub {
+  font-size: 2.5rem;
+  color: var(--ink-gray);
+}
+
+.hero-korean {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.5rem;
+  color: var(--vermillion);
+  margin-bottom: 2rem;
+}
+
+.hero-desc {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--ink-gray);
+  margin-bottom: 2.5rem;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--ink-black);
+  color: var(--bg-cream);
+  border: none;
+  padding: 1rem 2rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--vermillion);
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
+.cta-btn:hover::before {
+  left: 0;
+}
+
+.cta-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.cta-btn:hover .cta-arrow {
+  transform: translateX(5px);
+}
+
+/* Hero Visual */
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.floating-chars {
+  display: flex;
+  gap: 1rem;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 4rem;
+}
+
+.float-char {
+  color: var(--ink-black);
+  opacity: 0.1;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Features */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.feature-card {
+  background: var(--bg-paper);
+  padding: 2.5rem 2rem;
+  border: 1px solid var(--border);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: var(--vermillion);
+  transition: height 0.3s ease;
+}
+
+.feature-card:hover::before {
+  height: 100%;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.feature-icon {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 3rem;
+  color: var(--vermillion);
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.feature-card h3 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: var(--ink-black);
+}
+
+.feature-card p {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink-gray);
+  line-height: 1.7;
+}
+
+/* Section Styles */
+.section-header {
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.title-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 3rem;
+  color: var(--ink-black);
+}
+
+.title-kr {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  color: var(--stone);
+}
+
+.section-desc {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.9rem;
+  color: var(--stone);
+}
+
+/* Vocabulary Section */
+.vocab-section {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.vocab-card {
+  background: var(--bg-paper);
+  border: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.vocab-card:hover {
+  border-color: var(--vermillion);
+  transform: scale(1.02);
+}
+
+.vocab-card.selected {
+  background: var(--ink-black);
+  border-color: var(--ink-black);
+}
+
+.vocab-card.selected .card-japanese,
+.vocab-card.selected .card-category {
+  color: var(--bg-cream);
+}
+
+.card-category {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.65rem;
+  color: var(--stone);
+  background: var(--bg-cream);
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+}
+
+.vocab-card.selected .card-category {
+  background: var(--vermillion);
+}
+
+.card-japanese {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 2.5rem;
+  color: var(--ink-black);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-reading {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1rem;
+  color: var(--gold);
+}
+
+.card-korean {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.2rem;
+  color: var(--bg-cream);
+}
+
+/* Grammar Section */
+.grammar-section {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.grammar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grammar-item {
+  background: var(--bg-paper);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  transition: all 0.3s ease;
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.grammar-item:hover {
+  border-color: var(--vermillion);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+}
+
+.grammar-pattern {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pattern-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 2rem;
+  color: var(--ink-black);
+}
+
+.pattern-equals {
+  color: var(--vermillion);
+  font-size: 1.5rem;
+}
+
+.pattern-kr {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.5rem;
+  color: var(--ink-gray);
+}
+
+.grammar-example {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-left: 2px solid var(--border);
+  padding-left: 1.5rem;
+}
+
+.example-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.example-label {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 0.8rem;
+  color: var(--bg-cream);
+  background: var(--ink-black);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.example-text {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.1rem;
+  color: var(--ink-gray);
+}
+
+/* Quiz Section */
+.quiz-section {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.quiz-score {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  color: var(--ink-gray);
+}
+
+.quiz-score strong {
+  color: var(--vermillion);
+  font-size: 1.5rem;
+}
+
+.quiz-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--bg-paper);
+  border: 1px solid var(--border);
+  padding: 3rem;
+  text-align: center;
+}
+
+.quiz-question {
+  margin-bottom: 3rem;
+}
+
+.quiz-japanese {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 5rem;
+  color: var(--ink-black);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-reading {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.5rem;
+  color: var(--stone);
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.quiz-option {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.3rem;
+  padding: 1.25rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--ink-black);
+  background: var(--bg-cream);
+}
+
+.quiz-option.correct {
+  background: var(--vermillion);
+  border-color: var(--vermillion);
+  color: white;
+}
+
+.quiz-option.wrong:not(.correct) {
+  opacity: 0.5;
+}
+
+.quiz-result {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+}
+
+.quiz-result.correct {
+  background: rgba(215, 48, 39, 0.1);
+  color: var(--vermillion);
+}
+
+.quiz-result.wrong {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--ink-gray);
+}
+
+.next-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  background: var(--ink-black);
+  color: var(--bg-cream);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.next-btn:hover {
+  background: var(--vermillion);
+}
+
+/* Footer */
+.footer {
+  padding: 2rem 4rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-paper);
+  text-align: center;
+}
+
+.footer-text {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.75rem;
+  color: var(--stone);
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .header {
+    padding: 1.5rem 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .main {
+    padding: 2rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-char {
+    font-size: 4rem;
+  }
+
+  .hero-sub {
+    font-size: 2rem;
+  }
+
+  .hero-visual {
+    display: none;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .deco-stamp {
+    display: none;
+  }
+
+  .grammar-item {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .grammar-example {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding-left: 0;
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .logo-kr {
+    font-size: 1rem;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-btn {
+    padding: 0.5rem;
+    flex: 1;
+  }
+
+  .nav-jp {
+    font-size: 0.9rem;
+  }
+
+  .main {
+    padding: 1.5rem 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .title-jp {
+    font-size: 2rem;
+  }
+
+  .vocab-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .quiz-japanese {
+    font-size: 3.5rem;
+  }
+
+  .quiz-options {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    padding: 1.5rem 1rem;
+  }
+}
